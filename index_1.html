@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เฟรม | Video Editor Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFF7EF;
+    --peach:#FFDCC2;
+    --coral:#F2A989;
+    --sage:#9CAE8C;
+    --brown:#5B4636;
+    --brown-soft:#8A7261;
+    --white:#FFFDFB;
+    --line: rgba(91,70,54,0.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--brown);
+    font-family:'Nunito Sans', sans-serif;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+  }
+  a{color:inherit; text-decoration:none;}
+
+  /* ---------- nav ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:22px 6%;
+    z-index:100;
+    background:rgba(255,247,239,0.75);
+    backdrop-filter: blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .logo{font-family:'Fraunces',serif; font-weight:700; font-size:1.3rem; letter-spacing:0.02em;}
+  .logo span{color:var(--coral);}
+  nav ul{display:flex; gap:34px; list-style:none;}
+  nav a{font-size:0.95rem; font-weight:600; color:var(--brown-soft); transition:color .25s;}
+  nav a:hover{color:var(--coral);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:0 6%;
+    position:relative;
+  }
+  .hero-eyebrow{
+    font-size:0.85rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--coral); font-weight:700; margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 7vw, 5.2rem);
+    line-height:1.05;
+    max-width:880px;
+  }
+  .hero h1 em{
+    font-style:italic; color:var(--coral); font-weight:400;
+  }
+  .hero p{
+    margin-top:24px;
+    max-width:480px;
+    font-size:1.08rem;
+    color:var(--brown-soft);
+    line-height:1.7;
+  }
+  .hero-cta{
+    margin-top:38px;
+    display:flex; gap:16px; flex-wrap:wrap;
+  }
+  .btn{
+    padding:14px 30px;
+    border-radius:100px;
+    font-weight:700;
+    font-size:0.95rem;
+    transition:transform .25s, box-shadow .25s;
+    display:inline-block;
+  }
+  .btn-fill{background:var(--coral); color:var(--white);}
+  .btn-fill:hover{transform:translateY(-3px); box-shadow:0 10px 24px rgba(242,169,137,0.45);}
+  .btn-line{border:2px solid var(--brown); }
+  .btn-line:hover{background:var(--brown); color:var(--white); transform:translateY(-3px);}
+
+  /* ---------- filmstrip signature element ---------- */
+  .filmstrip{
+    width:100%;
+    margin-top:60px;
+    position:relative;
+  }
+  .filmstrip-track{
+    display:flex;
+    gap:10px;
+    padding:14px 0;
+    border-top:2px dashed var(--line);
+    border-bottom:2px dashed var(--line);
+    overflow:hidden;
+  }
+  .frame{
+    flex:0 0 auto;
+    width:90px; height:56px;
+    border-radius:6px;
+    background:linear-gradient(135deg, var(--peach), var(--cream));
+    border:1px solid var(--line);
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.7rem; color:var(--brown-soft); font-weight:700;
+  }
+  .frame::before, .frame::after{
+    content:"";
+    position:absolute; width:6px; height:6px; border-radius:50%;
+    background:var(--cream); border:1px solid var(--line);
+    top:50%; transform:translateY(-50%);
+  }
+  .frame::before{left:-9px;}
+  .frame::after{right:-9px;}
+  .timecode{
+    position:absolute; right:6%; top:-14px;
+    font-size:0.75rem; color:var(--brown-soft); font-weight:700;
+    background:var(--cream); padding:0 8px;
+  }
+
+  /* ---------- section base ---------- */
+  section{padding:120px 6%;}
+  .section-eyebrow{
+    font-size:0.85rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--sage); font-weight:700; margin-bottom:14px;
+  }
+  .section-title{
+    font-size:clamp(2rem, 4vw, 2.8rem);
+    max-width:600px;
+    margin-bottom:50px;
+  }
+
+  /* ---------- about ---------- */
+  .about-grid{
+    display:grid; grid-template-columns:1fr 1.2fr; gap:60px; align-items:start;
+  }
+  .about-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:24px;
+    padding:36px;
+    box-shadow:0 14px 34px rgba(91,70,54,0.06);
+  }
+  .about-card .avatar{
+    width:84px;height:84px;border-radius:50%;
+    background:linear-gradient(135deg, var(--coral), var(--peach));
+    margin-bottom:20px;
+  }
+  .about-card h3{font-size:1.3rem; margin-bottom:6px;}
+  .about-card .role{color:var(--coral); font-weight:700; font-size:0.9rem;}
+  .about-text p{
+    font-size:1.08rem; line-height:1.85; color:var(--brown-soft); margin-bottom:20px;
+  }
+  .tags{display:flex; flex-wrap:wrap; gap:10px; margin-top:24px;}
+  .tag{
+    padding:8px 18px; border-radius:100px;
+    background:var(--peach); color:var(--brown);
+    font-size:0.85rem; font-weight:700;
+  }
+
+  /* ---------- portfolio ---------- */
+  .portfolio-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:28px;
+  }
+  .work-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:22px;
+    overflow:hidden;
+    transition:transform .3s, box-shadow .3s;
+  }
+  .work-card:hover{transform:translateY(-6px); box-shadow:0 18px 36px rgba(91,70,54,0.1);}
+  .work-thumb{
+    aspect-ratio:16/10;
+    background:repeating-linear-gradient(135deg, var(--peach) 0 18px, var(--cream) 18px 36px);
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .play-btn{
+    width:54px;height:54px;border-radius:50%;
+    background:rgba(255,253,251,0.9);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 18px rgba(91,70,54,0.15);
+  }
+  .play-btn::after{
+    content:"";
+    border-left:14px solid var(--coral);
+    border-top:9px solid transparent; border-bottom:9px solid transparent;
+    margin-left:3px;
+  }
+  .work-info{padding:20px 22px;}
+  .work-info .label{
+    font-size:0.78rem; color:var(--sage); font-weight:700; letter-spacing:0.08em; text-transform:uppercase;
+  }
+  .work-info h4{font-size:1.05rem; margin-top:6px; color:var(--brown-soft); font-weight:700;}
+
+  /* ---------- skills/tools ---------- */
+  .tools-strip{
+    display:flex; flex-wrap:wrap; gap:16px;
+  }
+  .tool-pill{
+    padding:16px 26px;
+    border-radius:18px;
+    background:var(--white);
+    border:1px solid var(--line);
+    font-weight:700;
+    font-size:1rem;
+    color:var(--brown);
+    display:flex; align-items:center; gap:10px;
+  }
+  .tool-pill .dot{width:10px;height:10px;border-radius:50%; background:var(--coral);}
+
+  /* ---------- contact ---------- */
+  .contact{
+    background:linear-gradient(135deg, var(--peach), var(--cream));
+    border-radius:32px;
+    text-align:center;
+    padding:90px 6%;
+  }
+  .contact h2{font-size:clamp(2rem,5vw,3rem); margin-bottom:18px;}
+  .contact p{color:var(--brown-soft); font-size:1.05rem; margin-bottom:40px;}
+  .social-row{display:flex; justify-content:center; gap:20px; flex-wrap:wrap;}
+  .social-btn{
+    display:flex; align-items:center; gap:10px;
+    padding:16px 30px;
+    background:var(--white);
+    border-radius:100px;
+    font-weight:700;
+    box-shadow:0 10px 26px rgba(91,70,54,0.1);
+    transition:transform .25s;
+  }
+  .social-btn:hover{transform:translateY(-4px);}
+
+  footer{
+    text-align:center; padding:36px; color:var(--brown-soft); font-size:0.85rem;
+  }
+
+  @media (max-width: 900px){
+    .about-grid{grid-template-columns:1fr;}
+    .portfolio-grid{grid-template-columns:1fr 1fr;}
+    nav ul{display:none;}
+  }
+  @media (max-width: 600px){
+    .portfolio-grid{grid-template-columns:1fr;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; scroll-behavior:auto !important;}
+  }
+
+  :focus-visible{outline:3px solid var(--sage); outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">เฟรม<span>.</span></div>
+  <nav>
+    <ul>
+      <li><a href="#about">เกี่ยวกับฉัน</a></li>
+      <li><a href="#work">ผลงาน</a></li>
+      <li><a href="#tools">เครื่องมือ</a></li>
+      <li><a href="#contact">ติดต่อ</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow">Video Editor & Storyteller</div>
+  <h1>เล่าเรื่องของคุณ<br>ผ่าน<em>ทุกเฟรม</em>ที่ตัดต่อ</h1>
+  <p>สวัสดีครับ ผมเพิ่งเริ่มต้นเส้นทางสายตัดต่อวิดีโอ และตั้งใจฝึกฝีมือให้เก่งขึ้นทุกวัน เปิดรับโอกาสฝึกงานและทำงานร่วมกันเพื่อเรียนรู้ไปด้วยกัน</p>
+  <div class="hero-cta">
+    <a href="#contact" class="btn btn-fill">มาคุยงานกัน</a>
+    <a href="#work" class="btn btn-line">ดูผลงาน</a>
+  </div>
+
+  <div class="filmstrip">
+    <span class="timecode">00:00:24:12</span>
+    <div class="filmstrip-track" id="filmstripTrack"></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-eyebrow">รู้จักฉัน</div>
+  <h2 class="section-title">คนตัดต่อที่เชื่อว่าเรื่องราวดีๆ เริ่มจากรายละเอียดเล็กๆ</h2>
+  <div class="about-grid">
+    <div class="about-card">
+      <div class="avatar"></div>
+      <h3>Karn Thamjaoren</h3>
+      <div class="role">Video Editor</div>
+    </div>
+    <div class="about-text">
+      <p>ผมเพิ่งเริ่มต้นเส้นทางสายตัดต่อวิดีโอ และตั้งใจฝึกฝีมือให้เก่งขึ้นทุกวัน เพราะเชื่อว่าการตัดต่อที่ดีคือการเล่าเรื่องให้คนดูอยากดูจนจบ</p>
+      <p>ถึงจะยังเป็นมือใหม่ แต่เต็มที่กับทุกงานที่ได้ลงมือทำ เปิดรับโอกาสฝึกงานและคำแนะนำเสมอ พร้อมพัฒนาตัวเองไปเรื่อยๆ</p>
+      <div class="tags">
+        <span class="tag">Reels / TikTok</span>
+        <span class="tag">Music Video</span>
+        <span class="tag">Color Grading</span>
+        <span class="tag">Event Highlight</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="section-eyebrow">ผลงานคัดสรร</div>
+  <h2 class="section-title">งานที่กำลังจะมาเร็วๆ นี้</h2>
+  <div class="portfolio-grid">
+    <div class="work-card">
+      <div class="work-thumb"><div class="play-btn"></div></div>
+      <div class="work-info">
+        <div class="label">เร็วๆ นี้</div>
+        <h4>ใส่ผลงานชิ้นที่ 1</h4>
+      </div>
+    </div>
+    <div class="work-card">
+      <div class="work-thumb"><div class="play-btn"></div></div>
+      <div class="work-info">
+        <div class="label">เร็วๆ นี้</div>
+        <h4>ใส่ผลงานชิ้นที่ 2</h4>
+      </div>
+    </div>
+    <div class="work-card">
+      <div class="work-thumb"><div class="play-btn"></div></div>
+      <div class="work-info">
+        <div class="label">เร็วๆ นี้</div>
+        <h4>ใส่ผลงานชิ้นที่ 3</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tools">
+  <div class="section-eyebrow">เครื่องมือที่ใช้</div>
+  <h2 class="section-title">ซอฟต์แวร์และทักษะที่ถนัด</h2>
+  <div class="tools-strip">
+    <div class="tool-pill"><span class="dot"></span>Adobe Premiere Pro</div>
+    <div class="tool-pill"><span class="dot"></span>After Effects</div>
+    <div class="tool-pill"><span class="dot"></span>DaVinci Resolve</div>
+    <div class="tool-pill"><span class="dot"></span>Color Grading</div>
+    <div class="tool-pill"><span class="dot"></span>Sound Design</div>
+    <div class="tool-pill"><span class="dot"></span>Motion Graphics</div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact">
+    <h2>พร้อมเล่าเรื่องของคุณแล้วหรือยัง?</h2>
+    <p>ทักมาคุยรายละเอียดงานได้เลยผ่านช่องทางด้านล่าง</p>
+    <div class="social-row">
+      <a href="https://www.instagram.com/karn.code/" class="social-btn">📷 Instagram</a>
+      <a href="https://www.facebook.com/share/17b1FiuhL6/" class="social-btn">📘 Facebook</a>
+      <a href="#" class="social-btn">💬 Line</a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 เฟรม Studio — Made with ตัดต่อใจ</footer>
+
+<script>
+  // generate filmstrip frames
+  const track = document.getElementById('filmstripTrack');
+  const count = 14;
+  for(let i=0;i<count;i++){
+    const f = document.createElement('div');
+    f.className='frame';
+    f.textContent = String(i+1).padStart(2,'0');
+    track.appendChild(f);
+  }
+</script>
+
+</body>
+</html>
